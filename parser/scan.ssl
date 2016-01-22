@@ -25,7 +25,7 @@ Input :
 	lDot		'.'
 	lComma		','
 	lSemicolon	';'
-	lQuote
+	lQuote	'"'
 	lLeftAngle	'<'
 	lRightAngle	'>'
 	lLeftParen	'('
@@ -40,6 +40,10 @@ Input :
 	lTab
 	lNewPage 
 	lEndFile
+	lSlash	'/'
+	lHash	'#'
+	lExclamation	'!'
+	lAt	'@'
 	lastCharClass = lEndFile;
 
 Output :
