@@ -44,7 +44,7 @@ Input :
 	lHash	'#'
 	lExclamation	'!'
 	lAt	'@'
-	lastCharClass = lEndFile;
+	lastCharClass = lAt;
 
 Output :
 	% Keyword tokens -
