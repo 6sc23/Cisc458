@@ -182,7 +182,7 @@ Scan :
 			@Identifier
 		    | *:
 		]
-	    | '=':
+	    | '==':
 		.pEquals
 	    | '+':
 		.pPlus
@@ -197,10 +197,13 @@ Scan :
 		    | *:
 			.pDot
 		]
+
+		| '!=':
+			.pNotEqual
+
 	    | '<':
 		[
-		    | '>':
-			.pNotEqual
+
 		    | '=':
 			.pLessEqual
 		    | *:
