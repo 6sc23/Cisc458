@@ -113,7 +113,8 @@ Output :
 	pLeftBracket
 	pRightBracket
 	pDotDot
-	lastSyntaxToken = pDotDot;
+	pSlash
+	lastSyntaxToken = pSlash;
 
 Error :
 	eIllegalChar = 5
@@ -150,12 +151,14 @@ Scan :
 	    | lTab:
 	    | ';':
 		.pSemicolon
-	    | '(':
+	    | '/':
 		[
 		    | '*':
+			@Comment
+			| '/':
 			@AlternateComment
 		    | *:
-			.pLeftParen
+			.pSlash
 		]
 	    | ')':
 		.pRightParen
@@ -182,7 +185,7 @@ Scan :
 			@Identifier
 		    | *:
 		]
-	    | '==':
+	    | '=':
 		.pEquals
 	    | '+':
 		.pPlus
@@ -197,13 +200,10 @@ Scan :
 		    | *:
 			.pDot
 		]
-
-		| '!=':
-			.pNotEqual
-
 	    | '<':
 		[
-
+		    | '>':
+			.pNotEqual
 		    | '=':
 			.pLessEqual
 		    | *:
@@ -216,8 +216,6 @@ Scan :
 		    | *:
 			.pGreater
 		]
-	    | '{':
-		@Comment
 	    | '*':
 		.pStar
 	    | lNewPage:
@@ -278,8 +276,12 @@ Comment :
 	% Discard the contents of a comment
 
 	{[
-	    | '}':
-		>
+	    | '*':
+	    [
+	    	| '/':
+	    	>
+	    	| *: ?
+	    ]
 	    | lNewLine:
 		.pNewLine
 	    | lEndFile:		% comment must be closed before EOF
@@ -292,14 +294,9 @@ Comment :
 
 AlternateComment :
 	{[
-	    | '*':
-		[
-		    | ')':
-			>
-		    | *:
-		]
 	    | lNewLine:
 		.pNewLine
+		>
 	    | lEndFile:
 		#eCommentEOF
 		.pEndFile
