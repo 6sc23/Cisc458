@@ -97,7 +97,6 @@ Output :
 	pPlus
 	pMinus
 	pStar
-	pColonEquals
 	pDot
 	pComma
 	pSemicolon
@@ -170,13 +169,8 @@ Scan : %======change the rule for scanning comment and not equal
 		.pRightBracket
 	    | ',':
 		.pComma
-	    | ':':
-		[
-		    | '=':
-			.pColonEquals
-		    | *:
-			.pColon
-		]
+	    | ':':	%newly changed
+		.pColon %newly changed
 	    | lDigit:
 		oBufferSave
 		@Integer
