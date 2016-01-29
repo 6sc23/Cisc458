@@ -89,7 +89,7 @@
 	pDotDot = 47;
 	pSlash = 48;
 	pAssign = 49;
-	lastSyntaxToken = 48;
+	lastSyntaxToken = 49;
 
 	{ Input/Output Tokens }
 
