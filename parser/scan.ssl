@@ -113,6 +113,7 @@ Output :
 	pRightBracket
 	pDotDot
 	pSlash		%newly changed
+	pAssign		%newly changed
 	lastSyntaxToken = pSlash;		%newly changed
 
 Error :
@@ -181,8 +182,13 @@ Scan : %======change the rule for scanning comment and not equal
 			@Identifier
 		    | *:
 		]
-	    | '==':%newly changed 
-		.pEquals
+	    | '='
+	    [	
+	    	|'=': %newly changed 
+			.pEquals
+			|*:
+			.pAssign %newly changed 
+		]
 	    | '+':
 		.pPlus
 	    | lQuote:
