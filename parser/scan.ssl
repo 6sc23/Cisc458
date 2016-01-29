@@ -13,7 +13,7 @@
 %   illegal characters and integers followed by identifiers with no
 %   separator between them.
 
-Input :
+Input :		%added some new input tokens
 	lLetter 
 	firstCharClass = lLetter 
 	lDigit
@@ -25,7 +25,7 @@ Input :
 	lDot		'.'
 	lComma		','
 	lSemicolon	';'
-	lQuote	'"'
+	lQuote		'"'		%newly changed
 	lLeftAngle	'<'
 	lRightAngle	'>'
 	lLeftParen	'('
@@ -40,11 +40,11 @@ Input :
 	lTab
 	lNewPage 
 	lEndFile
-	lSlash	'/'
-	lHash	'#'
-	lExclamation	'!'
-	lAt	'@'
-	lastCharClass = lAt;
+	lSlash	'/'		%newly changed
+	lHash	'#'		%newly changed
+	lExclamation	'!'		%newly changed
+	lAt	'@'		%newly changed
+	lastCharClass = lAt;	%newly changed
 
 Output :
 	% Keyword tokens -
@@ -90,7 +90,7 @@ Output :
 	pLiteral
 	lastCompoundInputToken = pLiteral
 
-	% Non-compound tokens - 
+	% Non-compound tokens - ============added pSlash
 	%   These tokens simply represent themselves.
 	pNewLine
 	pEndFile
@@ -113,8 +113,8 @@ Output :
 	pLeftBracket
 	pRightBracket
 	pDotDot
-	pSlash
-	lastSyntaxToken = pSlash;
+	pSlash		%newly changed
+	lastSyntaxToken = pSlash;		%newly changed
 
 Error :
 	eIllegalChar = 5
@@ -140,7 +140,7 @@ rules
 % Note that the order of choice alternatives
 % may have a significant effect on performance
 % under some implementations of S/SL.
-Scan :
+Scan : %======change the rule for scanning comment and not equal
 	{[
 	    | lBlank :
 	    | lLetter:
@@ -151,17 +151,19 @@ Scan :
 	    | lTab:
 	    | ';':
 		.pSemicolon
-	    | '/':
-		[
-		    | '*':
-			@Comment
-			| '/':
-			@AlternateComment
-		    | *:
-			.pSlash
-		]
+	    | '/':		%newly changed
+		[		%newly changed
+		    | '*':		%newly changed
+			@Comment		%newly changed
+			| '/':		%newly changed
+			@AlternateComment		%newly changed
+		    | *:		%newly changed
+			.pSlash		%newly changed
+		]		%newly changed
 	    | ')':
 		.pRightParen
+		| '(':		%newly changed
+		.pLeftParen		%newly changed
 	    | '[':
 		.pLeftBracket
 	    | ']':
@@ -185,7 +187,7 @@ Scan :
 			@Identifier
 		    | *:
 		]
-	    | '==':
+	    | '==':%newly changed 
 		.pEquals
 	    | '+':
 		.pPlus
@@ -200,8 +202,8 @@ Scan :
 		    | *:
 			.pDot
 		]
-	    | '!=':
-	    	.pNotEqual
+	    | '!=': %newly changed
+	    	.pNotEqual %newly changed
 	    | '<':
 		[
 		    | '=':
@@ -272,16 +274,16 @@ Literal :
 		oBufferSave
 	]};
 
-Comment :
+Comment : %=======new rules for commenting
 	% Discard the contents of a comment
 
 	{[
-	    | '*':
-	    [
-	    	| '/':
-	    	>
-	    	| *: ?
-	    ]
+	    | '*': 		%newly changed
+	    [			%newly changed
+	    	| '/':		%newly changed
+	    	>		%newly changed
+	    	| *: ?		%newly changed
+	    ]		%newly changed
 	    | lNewLine:
 		.pNewLine
 	    | lEndFile:		% comment must be closed before EOF
@@ -296,7 +298,7 @@ AlternateComment :
 	{[
 	    | lNewLine:
 		.pNewLine
-		>
+		>		%newly changed
 	    | lEndFile:
 		#eCommentEOF
 		.pEndFile
