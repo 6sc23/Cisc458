@@ -200,10 +200,10 @@ Scan :
 		    | *:
 			.pDot
 		]
+	    | '!=':
+	    	.pNotEqual
 	    | '<':
 		[
-		    | '>':
-			.pNotEqual
 		    | '=':
 			.pLessEqual
 		    | *:
