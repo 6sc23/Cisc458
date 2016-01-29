@@ -185,7 +185,7 @@ Scan : %======change the rule for scanning comment and not equal
 		    | *:
 		]
 
-	    | '='：
+	    | '=':
 	    [	
 	    	|'=': %newly changed 
 			.pEquals
@@ -213,7 +213,7 @@ Scan : %======change the rule for scanning comment and not equal
 	    	|*:
 	    	.pNot
 	    ]
-	    
+
 	    | '<':
 		[
 		    | '=':
