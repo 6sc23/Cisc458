@@ -48,7 +48,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
     const
 
 { ===== Character classes (scanner input tokens), copied here from scan.def }
-
+	{--------Added new JT input character ISlash IHash IExclamation IAt---------}
 	{ Input Tokens }
 	lLetter = 0;
 	firstCharClass = 0;
@@ -76,11 +76,11 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
 	lTab = 22;
 	lNewPage = 23;
 	lEndFile = 24;
-	lSlash = 25;
-	lHash = 26;
-	lExclamation = 27;
-	lAt = 28;
-	lastCharClass = 28;
+	lSlash = 25;{newly added}
+	lHash = 26;{newly added}
+	lExclamation = 27;{newly added}
+	lAt = 28;{newly added}
+	lastCharClass = 28;{newly changed}
 
 
 
@@ -95,7 +95,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
 
 { ===== Scanner -> Parser token stream defintiions (scanner output tokens),
 	copied here from scan.def or parser.def, which must agree!}
-
+	{---------added new syntax tokens and remove some old tokens and updated the tokens number------}
 	{ Output Tokens }
 	pDiv = 0;
 	firstKeywordToken = 0;
@@ -113,16 +113,16 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
 	pType = 12;
 	pIf = 13;
 	pCase = 14;
-	pLet = 15;
-	pFunction = 16;
-	pSwitch = 17;
-	pDefault = 18;
-	pElsif = 19;
-	pLoop = 20;
-	pBreak = 21;
-	pWhen = 22;
-	pClass = 23;
-	pPublic = 24;
+	pLet = 15;{newly changed}
+	pFunction = 16;{newly changed}
+	pSwitch = 17;{newly changed}
+	pDefault = 18;{newly changed}
+	pElsif = 19;{newly changed}
+	pLoop = 20;{newly changed}
+	pBreak = 21;{newly changed}
+	pWhen = 22;{newly changed}
+	pClass = 23;{newly changed}
+	pPublic = 24;{newly changed}
 	lastKeywordToken = 24;
 	pIdentifier = 25;
 	firstCompoundInputToken = 25;
@@ -150,7 +150,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
 	pLeftBracket = 46;
 	pRightBracket = 47;
 	pDotDot = 48;
-	pSlash = 49;
+	pSlash = 49;{newly changed}
 	lastSyntaxToken = 49;
 
 { ===== }
@@ -826,10 +826,10 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
 	    charClassMap[ord(']')] := lRightBracket;
 	    charClassMap[ord('{')] := lLeftBrace;
 	    charClassMap[ord('}')] := lRightBrace;
-	    charClassMap[ord('/')] := lSlash;
-	   	charClassMap[ord('#')] := lHash;
-	    charClassMap[ord('!')] := lExclamation;
-	    charClassMap[ord('@')] := lRightBrace;
+	    charClassMap[ord('/')] := lSlash;{newly added}
+	   	charClassMap[ord('#')] := lHash;{newly added}
+	    charClassMap[ord('!')] := lExclamation;{newly added}
+	    charClassMap[ord('@')] := lRightBrace;{newly added}
 
 
 	    { Initialize the scan ssl table }
