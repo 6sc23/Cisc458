@@ -67,7 +67,7 @@ Output :
 	pType
 	pIf
 	pCase
-	pLet
+	pLet %new change
 	pFunction
 	pSwitch
 	pDefault
@@ -235,6 +235,7 @@ Scan : %======change the rule for scanning comment and not equal
 		#eIllegalChar
 	    | lEndFile:
 		.pEndFile
+		>		%new change
 	]};
 
 Identifier :

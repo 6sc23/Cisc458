@@ -1,0 +1,5 @@
+program P(input, output)
+{
+	write("hello,World");
+	writeln();
+}
