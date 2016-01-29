@@ -185,7 +185,7 @@ Scan :
 			@Identifier
 		    | *:
 		]
-	    | '=':
+	    | '==':
 		.pEquals
 	    | '+':
 		.pPlus
