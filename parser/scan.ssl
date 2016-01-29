@@ -182,7 +182,7 @@ Scan : %======change the rule for scanning comment and not equal
 			@Identifier
 		    | *:
 		]
-	    | '='
+	    | '='：
 	    [	
 	    	|'=': %newly changed 
 			.pEquals
