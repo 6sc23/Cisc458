@@ -151,6 +151,7 @@ Scan : %======change the rule for scanning comment and not equal
 	    | lTab:
 	    | ';':
 		.pSemicolon
+
 	    | '/':		%newly changed
 		[		%newly changed
 		    | '*':		%newly changed
@@ -160,6 +161,7 @@ Scan : %======change the rule for scanning comment and not equal
 		    | *:		%newly changed
 			.pSlash		%newly changed
 		]		%newly changed
+
 	    | ')':
 		.pRightParen
 		| '(':		%newly changed
@@ -182,13 +184,15 @@ Scan : %======change the rule for scanning comment and not equal
 			@Identifier
 		    | *:
 		]
+
 	    | '='：
 	    [	
 	    	|'=': %newly changed 
 			.pEquals
-			|*:
+			| *:
 			.pAssign %newly changed 
 		]
+
 	    | '+':
 		.pPlus
 	    | lQuote:
@@ -202,8 +206,14 @@ Scan : %======change the rule for scanning comment and not equal
 		    | *:
 			.pDot
 		]
-	    | '!=': %newly changed
+	    | '!':
+	    [
+	    	|'=': %newly changed
 	    	.pNotEqual %newly changed
+	    	|*:
+	    	.pNot
+	    ]
+	    
 	    | '<':
 		[
 		    | '=':
