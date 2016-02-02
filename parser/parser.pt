@@ -76,11 +76,11 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
 	lTab = 22;
 	lNewPage = 23;
 	lEndFile = 24;
-	lSlash = 25;{newly added}
-	lHash = 26;{newly added}
-	lExclamation = 27;{newly added}
-	lAt = 28;{newly added}
-	lastCharClass = 28;{newly changed}
+	lSlash = 25;
+	lHash = 26;
+	lExclamation = 27;
+	lAt = 28;
+	lastCharClass = 28;
 
 
 
@@ -113,16 +113,16 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
 	pType = 12;
 	pIf = 13;
 	pCase = 14;
-	pLet = 15;{newly changed}
-	pFunction = 16;{newly changed}
-	pSwitch = 17;{newly changed}
-	pDefault = 18;{newly changed}
-	pElsif = 19;{newly changed}
-	pLoop = 20;{newly changed}
-	pBreak = 21;{newly changed}
-	pWhen = 22;{newly changed}
-	pClass = 23;{newly changed}
-	pPublic = 24;{newly changed}
+	pLet = 15;
+	pFunction = 16;
+	pSwitch = 17;
+	pDefault = 18;
+	pElsif = 19;
+	pLoop = 20;
+	pBreak = 21;
+	pWhen = 22;
+	pClass = 23;
+	pPublic = 24;
 	lastKeywordToken = 24;
 	pIdentifier = 25;
 	firstCompoundInputToken = 25;
@@ -149,9 +149,13 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
 	pLeftBracket = 45;
 	pRightBracket = 46;
 	pDotDot = 47;
-	pSlash = 48;	{newly changed}
-	pAssign = 49;	{newly changed}	
-	lastSyntaxToken = 49;	{newly changed}
+	pLeftBrace = 48;
+	pRightBrace = 49;
+	pHash = 50;
+	pAt = 51;
+	pSlash = 52;
+	pAssign = 53;
+	lastSyntaxToken = 53;
 
 { ===== }
 
@@ -255,8 +259,8 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
 	lastAbortCode = 4;
 
 	{ Scanner error codes, copied here from scan.def }
-	firstScanError = 5;
 	eIllegalChar = 5;
+	firstScanError = 5;
 	eLiteralLine = 6;
 	eLiteralEOF = 7;
 	eCommentEOF = 8;
@@ -329,7 +333,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
 	{ misc. }
 	tab = '	';
 	blank = ' ';
-	quote = '''';
+	quote = '"';
 	null = 0;
 
 	{ Phase identification values - for use by common routines }
@@ -829,7 +833,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
 	    charClassMap[ord('/')] := lSlash;{newly added}
 	   	charClassMap[ord('#')] := lHash;{newly added}
 	    charClassMap[ord('!')] := lExclamation;{newly added}
-	    charClassMap[ord('@')] := lRightBrace;{newly added}
+	    charClassMap[ord('@')] := lAt;{newly added}
 
 
 	    { Initialize the scan ssl table }

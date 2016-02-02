@@ -87,9 +87,13 @@
 	pLeftBracket = 45;
 	pRightBracket = 46;
 	pDotDot = 47;
-	pSlash = 48;
-	pAssign = 49;
-	lastSyntaxToken = 49;
+	pLeftBrace = 48;
+	pRightBrace = 49;
+	pHash = 50;
+	pAt = 51;
+	pSlash = 52;
+	pAssign = 53;
+	lastSyntaxToken = 53;
 
 	{ Input/Output Tokens }
 
@@ -106,14 +110,14 @@
 
 	{ S/SL Rule Table Addresses } {
 	Scan = 0;
-	Identifier = 230;
-	Comment = 306;
-	AlternateComment = 343;
-	Integer = 247;
-	Literal = 262;
+	Identifier = 252;
+	Comment = 328;
+	AlternateComment = 365;
+	Integer = 269;
+	Literal = 284;
 	}
 
 	{ S/SL Table Parameters }
-	sslTblSize = 368;
+	sslTblSize = 390;
 	minSslTableValue = -32767;
 	maxSslTableValue = 32767;

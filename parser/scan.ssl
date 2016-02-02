@@ -243,11 +243,10 @@ Scan : %======change the rule for scanning comment and not equal
 	    | '*':
 		.pStar
 	    | lNewPage:
-	    | lIllegal, '}':
+	    | lIllegal:
 		#eIllegalChar
 	    | lEndFile:
 		.pEndFile
-		>		%new change
 	]};
 
 Identifier :
