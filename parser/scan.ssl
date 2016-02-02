@@ -112,6 +112,10 @@ Output :
 	pLeftBracket
 	pRightBracket
 	pDotDot
+	pLeftBrace %newly changed
+	pRightBrace %newly changed
+	pHash %newly changed
+	pAt %newly changed
 	pSlash		%newly changed
 	pAssign		%newly changed
 	lastSyntaxToken = pAssign;		%newly changed
@@ -170,6 +174,14 @@ Scan : %======change the rule for scanning comment and not equal
 		.pLeftBracket
 	    | ']':
 		.pRightBracket
+		|'{': %newly changed
+		.pLeftBrace %newly changed
+		|'}': %newly changed
+		.pRightBrace %newly changed
+		|'#': %newly changed
+		.pHash %newly changed
+		|'@': %newly changed
+		.pAt %newly changed
 	    | ',':
 		.pComma
 	    | ':':	%newly changed
