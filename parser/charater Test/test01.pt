@@ -1,0 +1,14 @@
+program test01 (input){
+	// this is a one line comment
+	
+	/*
+		testing multi-line comments.
+		this is a multi-line comment.
+	*/
+
+	#testing hash and exclamations!
+
+	"testing double quotes"
+
+	'testing single quotes'
+}
