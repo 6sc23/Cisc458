@@ -1,0 +1,11 @@
+program test02 (input) {
+	(* testing old comments *)
+
+	5 != 2
+
+	5 := 5
+
+	5 == 2
+
+	email@helloworld.com
+}
