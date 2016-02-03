@@ -68,16 +68,16 @@ Output :
 	pIf
 	pCase
 	pLet %new change
-	pFunction
-	pSwitch
-	pDefault
-	pElsif
-	pLoop
-	pBreak
-	pWhen
-	pClass
-	pPublic
-	lastKeywordToken = pPublic
+	pFunction %new change
+	pSwitch %new change
+	pDefault %new change
+	pElsif %new change
+	pLoop %new change
+	pBreak %new change
+	pWhen %new change
+	pClass %new change
+	pPublic %new change
+	lastKeywordToken = pPublic %new change
 
 	% Scanner tokens -
 	%   These are the tokens actually recognized by the Scanner itself.
@@ -247,6 +247,7 @@ Scan : %======change the rule for scanning comment and not equal
 		#eIllegalChar
 	    | lEndFile:
 		.pEndFile
+		>
 	]};
 
 Identifier :

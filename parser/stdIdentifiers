@@ -21,16 +21,16 @@ var
 type
 if
 case
-let
-function
-switch
-default
-elsif
-loop
-break
-when
-class
-public
+let %newly changed
+function %newly changed
+switch %newly changed
+default %newly changed
+elsif %newly changed
+loop %newly changed
+break %newly changed
+when %newly changed
+class %newly changed
+public %newly changeds
 
 % End of keywords
 
@@ -40,7 +40,7 @@ public
 
 % Predeclared type names
 integer
-string
+string %newly changed
 boolean
 text
 

@@ -1,0 +1,32 @@
+#!/bin/bash
+# declare file variable
+
+for file in /cas/student/cisc458e/Desktop/Cisc458-master/parser/oldptkeywords/*
+do
+echo ===========================================>>output.txt
+echo Documentation: Testing Keyword $file >>output.txt
+echo >>output.txt
+echo Unit test file: $file>> output.txt
+echo >>output.txt
+
+test1="ssltrace \"ptc -o1 -t1 -L /cas/student/cisc458e/Desktop/Cisc458-master/lib/pt $file\" scan.def -e >> output.txt"
+test2="ssltrace \"ptc -o1 -t1 -L /cas/student/cisc458e/Desktop/Cisc458-master/lib/pt $file\" scan.def -i >> output.txt"
+echo Output: >> output.txt
+echo ssltrace -e >> output.txt
+
+eval $test1
+
+echo >>output.txt
+echo ssltrace -i >> output.txt
+echo >>output.txt
+eval $test2
+echo >>output.txt
+
+done
+
+
+
+
+
+
+

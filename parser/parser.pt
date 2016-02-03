@@ -68,19 +68,19 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
 	lRightParen = 14;
 	lLeftBracket = 15;
 	lRightBracket = 16;
-	lLeftBrace = 17;
-	lRightBrace = 18;
+	lLeftBrace = 17; {newly changed}
+	lRightBrace = 18; {newly changed}
 	lBlank = 19;
 	lIllegal = 20;
 	lNewLine = 21;
 	lTab = 22;
 	lNewPage = 23;
 	lEndFile = 24;
-	lSlash = 25;
-	lHash = 26;
-	lExclamation = 27;
-	lAt = 28;
-	lastCharClass = 28;
+	lSlash = 25;{newly changed}
+	lHash = 26;{newly changed}
+	lExclamation = 27;{newly changed}
+	lAt = 28;{newly changed}
+	lastCharClass = 28;{newly changed}
 
 
 
@@ -113,16 +113,16 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
 	pType = 12;
 	pIf = 13;
 	pCase = 14;
-	pLet = 15;
-	pFunction = 16;
-	pSwitch = 17;
-	pDefault = 18;
-	pElsif = 19;
-	pLoop = 20;
-	pBreak = 21;
-	pWhen = 22;
-	pClass = 23;
-	pPublic = 24;
+	pLet = 15;{newly changed}
+	pFunction = 16;{newly changed}
+	pSwitch = 17;{newly changed}
+	pDefault = 18;{newly changed}
+	pElsif = 19;{newly changed}
+	pLoop = 20;{newly changed}
+	pBreak = 21;{newly changed}
+	pWhen = 22;{newly changed}
+	pClass = 23;{newly changed}
+	pPublic = 24;{newly changed}
 	lastKeywordToken = 24;
 	pIdentifier = 25;
 	firstCompoundInputToken = 25;
@@ -149,13 +149,13 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
 	pLeftBracket = 45;
 	pRightBracket = 46;
 	pDotDot = 47;
-	pLeftBrace = 48;
-	pRightBrace = 49;
-	pHash = 50;
-	pAt = 51;
-	pSlash = 52;
-	pAssign = 53;
-	lastSyntaxToken = 53;
+	pLeftBrace = 48;{newly changed}
+	pRightBrace = 49;{newly changed}
+	pHash = 50;{newly changed}
+	pAt = 51;{newly changed}
+	pSlash = 52;{newly changed}
+	pAssign = 53;{newly changed}
+	lastSyntaxToken = 53;{newly changed}
 
 { ===== }
 
@@ -1680,13 +1680,13 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
     { Main program ScannerParser }
     begin
 
-	Initialize;
+	Initialize; {newly changed}
 	 
-	parseInputToken:= pNewLine;
-	newInputLine:= false;
+	parseInputToken:= pNewLine; {newly changed}
+	newInputLine:= false; {newly changed}
 
-    while parseInputToken <> pEndFile do
-    	AcceptSyntaxToken;
+    while parseInputToken <> pEndFile do {newly changed}
+    	AcceptSyntaxToken; {newly changed}
 
 	{
 
