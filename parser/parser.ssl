@@ -134,6 +134,7 @@ Output :
 	sPublic		%newly added
 	sDefault 	%newly added
 	sClass 		%newly added
+	sSwitchStmt %newly added
 	sLoopStmt	%newly added
 	sLoopBreakWhen %newlya added
 	sLoopEnd	%newly added
@@ -358,6 +359,12 @@ Statement :
 		@IfStmt
 	    | 'case':
 		@CaseStmt
+		| 'switch':
+		@SwitchStmt
+		| 'loop':
+		@LoopStmt
+		| 'default':
+		@DefaultStmt
 	    | *:
 		.sNullStmt
 	];
@@ -436,11 +443,19 @@ IfStmt :
 	    | *:
 	];
 
+%===============newly changed===============
+SwitchStmt : 
+	.sSwitchStmt
+	'('
+	 pIdentifier  .sIdentifier
+	')'
+	'{'
+	@BeginStmt
+	.sSwitchEnd
+
 CaseStmt :
 	.sCaseStmt
-	@Expression
-	.sExpnEnd
-	'of'
+
 	@CaseAlternative
 	{[
 	    | ';':
@@ -448,12 +463,12 @@ CaseStmt :
 		% for the common situation of an extra semicolon
 		% at the end of the list of case alternatives.
 		[
-		    | 'end':
+		    | 'break':
 			>
 		    | *:
 			@CaseAlternative
 		]
-	    | 'end':
+	    | '}':
 		>
 	]}
 	.sCaseEnd;
@@ -472,6 +487,11 @@ CaseAlternative :
 	}
 	.sLabelEnd
 	':'  @Statement;
+
+DefaultStmt :
+	.sDefault
+	':' @Statement;
+%===============================================
 
 WhileStmt :
 	.sWhileStmt
