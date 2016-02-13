@@ -21,29 +21,30 @@ Input :
 	pDiv			'div'
 	firstKeywordToken = pDiv 
 	pMod			'mod'
-	pOr			'or'
+	pOr				'or'
 	pAnd			'and'
 	pNot			'not'
-	pThen			'then'
 	pElse			'else'
-	pOf			'of'
-	pEnd			'end'
-	pUntil			'until'
-	pDo			'do'
+	pOf				'of'
 	pArray			'array'
 	pFile			'file'
 	pPacked			'packed'
 	pProgram		'program'
-	pConst			'const'
 	pVar			'var'
 	pType			'type'
-	pProcedure		'procedure'
-	pBegin			'begin'
-	pIf			'if'
+	pIf				'if'
 	pCase			'case'
-	pWhile			'while'
-	pRepeat			'repeat'
-	lastKeywordToken = pRepeat 
+	pLet 			'let' %new change
+	pFunction		'function' %new change
+	pSwitch			'switch' %new change
+	pDefault		'default' %new change
+	pElsif			'elsif' %new change
+	pLoop			'loop' %new change
+	pBreak			'break' %new change
+	pWhen			'when' %new change
+	pClass			'class' %new change
+	pPublic			'public' %new change
+	lastKeywordToken = pPublic %new change 
 
 	pIdentifier 
 	firstCompoundInputToken = pIdentifier
@@ -56,22 +57,27 @@ Input :
 	pPlus			'+'
 	pMinus			'-'
 	pStar			'*'
-	pColonEquals		':='
 	pDot			'.'
 	pComma			','
 	pSemicolon		';'
 	pColon			':'
-	pEquals			'='
+	pEquals			'==' %newly changed form '=' to '=='
 	pNotEqual		'<>'
 	pLess			'<'
 	pLessEqual		'<='
-	pGreaterEqual		'>='
+	pGreaterEqual	'>='
 	pGreater		'>'
 	pLeftParen		'('
 	pRightParen		')'
-	pLeftBracket		'['
-	pRightBracket		']'
+	pLeftBracket	'['
+	pRightBracket	']'
 	pDotDot			'..'
+	pLeftBrace 		'{' %newly changed
+	pRightBrace 	'}' %newly changed
+	pHash 			'#' %newly changed
+	pAt 			'@' %newly changed
+	pSlash 			'/' %newly changed
+	pAssign 		'=' %newly changed
 	lastSyntaxToken = pDotDot;
 
 Output :
@@ -108,9 +114,6 @@ Output :
 	sIfStmt
 	sThen
 	sElse
-	sWhileStmt
-	sRepeatStmt
-	sRepeatEnd
 	sEq
 	sNE
 	sLT
@@ -128,7 +131,15 @@ Output :
 	sAnd
 	sNot
 	sNewLine
-	lastSemanticToken = sNewLine;
+	sPublic		%newly added
+	sDefault 	%newly added
+	sClass 		%newly added
+	sLoopStmt	%newly added
+	sLoopBreakWhen %newlya added
+	sLoopEnd	%newly added
+	sSubstring 	%newly added
+	sLength		%newlyadded
+	lastSemanticToken = sLength; %newly updated
 
 
 rules
@@ -149,7 +160,7 @@ Program :
 	}
 	')'
 	.sParmEnd
-	';'  @Block  '.';
+	 '{' @Block;	%newly updated
 
 Block :
 	% Strictly speaking, standard Pascal requires that declarations
@@ -157,7 +168,7 @@ Block :
 	% We allow arbitrary intermixing of these instead to preserve
 	% programmer sanity.
 	{[
-	    | 'const':
+	    | 'let': %newly changed
 		.sConst
 		@ConstantDefinitions
 	    | 'type':
@@ -166,16 +177,30 @@ Block :
 	    | 'var':
 		.sVar
 		@VariableDeclarations
-	    | 'procedure':
+	    | 'function':				%newly updated
 		.sProcedure
 		% procedure name
 		pIdentifier  .sIdentifier
 		@ProcedureHeading
-		@Block  ';'
+		'{' @Block
+		| 'public':							  %newly added
+			[								  %newly added
+				|'function':				  %newly added
+					.sProcedure				  %newly added
+					.sPublic				  %newly added
+					pIdentifier .sIdentifier  %newly added
+					@ProcedureHeading 		  %newly added
+					'{' @Block				  %newly added
+				| *:						  %newly added	
+				>							  %newly added
+			]								  %newly added
+		| 'class':							  %newly added
+			.sClass							  %newly added
+			pIdentifier .sIdentifier 		  %newly added
+			'{' @Block						  %newly added
 	    | *:
 		>
 	]}
-	'begin'
 	@BeginStmt;
 
 ConstantDefinitions :
@@ -214,17 +239,23 @@ UnsignedIntegerConstant :
 		.sInteger
 	];
 
+%newly changed rule
 TypeDefinitions :
 	% Accept one or more named type definitions.
 	pIdentifier  .sIdentifier
-	'='  @TypeBody  ';'
 	{[
-	    | pIdentifier:
-		.sIdentifier
-		'='  @TypeBody  ';'
-	    | *:
+		| ',':
+			.sType
+			[
+				| pIdentifier:
+				.sIdentifier
+				|*:
+				>
+			]
+		| *:
 		>
-	]};
+	]}
+	':'  @TypeBody  ';';
 
 TypeBody :
 	[
@@ -272,17 +303,23 @@ OptionallySignedIntegerConstant :
 		@UnsignedIntegerConstant
 	];
 
+%newly changed rule
 VariableDeclarations :
 	% Accept one or more variable declarations.
 	pIdentifier  .sIdentifier
-	':'  @TypeBody  ';'
 	{[
-	    | pIdentifier:
-		.sIdentifier
-		':'  @TypeBody  ';'
-	    | *:
+		| ',':
+			.sVar
+			[
+				| pIdentifier:
+					.sIdentifier
+				| *: 
+				>
+			]
+		| *:
 		>
-	]};
+	]}
+	':'  @TypeBody  ';';
 
 ProcedureHeading :
 	% Accept zero or more procedure formal parameter declarations.
@@ -301,7 +338,7 @@ ProcedureHeading :
 		    % type identifier
 		    pIdentifier  .sIdentifier
 		    [
-			| ';':
+			| ',':	%newly updated
 			| *:
 			    >
 		    ]
@@ -309,23 +346,18 @@ ProcedureHeading :
 		')'
 	    | *:
 	]
-	';'
-	.sParmEnd;
+	.sParmEnd; %newly updated
 
 Statement :
 	[
 	    | pIdentifier:
 		@AssignmentOrCallStmt
-	    | 'begin':
+	    | '{': 						%newly changed
 		@BeginStmt
 	    | 'if':
 		@IfStmt
-	    | 'while':
-		@WhileStmt
 	    | 'case':
 		@CaseStmt
-	    | 'repeat':
-		@RepeatStmt
 	    | *:
 		.sNullStmt
 	];
@@ -385,7 +417,7 @@ BeginStmt :
 	    @Statement
 	    [
 		| ';':
-		| 'end':
+		| '}':	%newly changed
 		    .sEnd
 		    >
 	    ]
