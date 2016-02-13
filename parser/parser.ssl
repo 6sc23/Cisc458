@@ -359,12 +359,14 @@ Statement :
 		@IfStmt
 	    | 'case':
 		@CaseStmt
-		| 'switch':
+		| 'switch':%newly changed
 		@SwitchStmt
-		| 'loop':
+		| 'loop':%newly changed
 		@LoopStmt
-		| 'default':
+		| 'default':%newly changed
 		@DefaultStmt
+		| 'break when'
+		@BreakWhenStmt
 	    | *:
 		.sNullStmt
 	];
@@ -451,7 +453,7 @@ SwitchStmt :
 	')'
 	'{'
 	@BeginStmt
-	.sSwitchEnd
+	.sSwitchEnd;
 
 CaseStmt :
 	.sCaseStmt
@@ -514,6 +516,27 @@ RepeatStmt :
 	@Expression
 	.sExpnEnd;
 
+LoopStmt :
+	.sLoopStmt
+	
+	'{'
+	{
+		@Statement
+		[
+		| ';':
+		| '}':
+			.sLoopEnd
+		]
+	};
+
+BreakWhenStmt :
+	.sLoopBreakWhen
+	'('
+	@Expression
+	')'
+	.sExpnEnd;
+
+%===============================================
 Expression :
 	@SimpleExpression
 	[
