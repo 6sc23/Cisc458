@@ -1693,12 +1693,9 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source,
     while parseInputToken <> pEndFile do {newly changed}
     	AcceptSyntaxToken; {newly changed}
 
-	{
-
-	Parser;
-	{ No sense running semantic phase if serious syntax errors found 
+	Parser; {uncomment the old code}
+	{ No sense running semantic phase if serious syntax errors found }
 	if errorCount > 0 then
-	    rewrite(parseStream {, NparseStream}
-	
-    end. { ScannerParser }
+	    rewrite(parseStream {, NparseStream} );
+    end.  { ScannerParser }
     
