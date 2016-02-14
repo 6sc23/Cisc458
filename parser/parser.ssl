@@ -355,7 +355,7 @@ Statement :
 		@AssignmentOrCallStmt
 	    | '{': 						%newly changed
 		@BeginStmt
-	    | 'if':
+	    | 'if':						%newly updated
 		@IfStmt
 	    | 'case':
 		@CaseStmt
@@ -432,16 +432,22 @@ BeginStmt :
 	    ]
 	};
 
+%newly updated
 IfStmt :
 	.sIfStmt
+	'('
 	@Expression
+	')'
 	.sExpnEnd
-	'then'  .sThen
+	.sThen
 	@Statement
 	[
 	    | 'else':
 		.sElse
 		@Statement
+		| 'elsif':	%newly added
+		.sElse		%newly added
+		@IfStmt 	%newly added
 	    | *:
 	];
 
@@ -520,6 +526,7 @@ LoopStmt :
 	.sLoopStmt
 	
 	'{'
+
 	{
 		@Statement
 		[
@@ -534,7 +541,7 @@ BreakWhenStmt :
 	'('
 	@Expression
 	')'
-	.sExpnEnd;
+	.sExpnEnd; 
 
 %===============================================
 Expression :
