@@ -62,7 +62,7 @@ Input :
 	pSemicolon		';'
 	pColon			':'
 	pEquals			'==' %newly changed form '=' to '=='
-	pNotEqual		'<>'
+	pNotEqual		'!=' %newly changed from '<>' to '!='
 	pLess			'<'
 	pLessEqual		'<='
 	pGreaterEqual	'>='
@@ -217,7 +217,7 @@ ConstantDefinitions :
 	]};
 
 ConstantValue :
-	'='
+	'==' %newly changed from = in pt
 	[
 	    | pInteger:
 		.sInteger
@@ -373,7 +373,7 @@ Statement :
 
 AssignmentOrCallStmt :
 	[
-	    | ':=':
+	    | '=': %newly changed from := in pt to = in jt
 		.sAssignmentStmt
 		.sIdentifier	% identifier accepted in the Statement rule
 		@Expression
@@ -384,7 +384,7 @@ AssignmentOrCallStmt :
 		.sSubscript
 		@Expression
 		.sExpnEnd
-		']'  ':='
+		']'  '=' %newly changed
 		@Expression
 		.sExpnEnd
 	    | *:
@@ -533,6 +533,7 @@ LoopStmt :
 		| ';':
 		| '}':
 			.sLoopEnd
+			>
 		]
 	};
 
@@ -547,7 +548,7 @@ BreakWhenStmt :
 Expression :
 	@SimpleExpression
 	[
-	    | '=':
+	    | '==':
 		@SimpleExpression  .sEq
 	    | '<>':
 		@SimpleExpression  .sNE
