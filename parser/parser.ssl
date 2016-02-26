@@ -230,8 +230,28 @@ ConstantValue :
 		@UnsignedIntegerConstant
 	    | pLiteral:
 		.sLiteral
+		@checkAt%newly changed 
 	];
 
+checkAt :%newly changed 
+[
+	|'@'
+		[
+			|pInteger:
+			.sInteger
+			|pVar:
+			.sVar
+			':'
+			[
+				|pInteger:
+				.sInteger
+				|pVar:
+				.sVar
+			]
+		]
+	|*:
+	>	
+]
 UnsignedIntegerConstant :
 	[
 	    | pIdentifier:
@@ -470,12 +490,7 @@ CaseStmt :
 		% since case alternatives cannot be null, allow
 		% for the common situation of an extra semicolon
 		% at the end of the list of case alternatives.
-		[
-		    | 'break':
-			>
-		    | *:
-			@CaseAlternative
-		]
+		@CaseAlternative
 	    | '}':
 		>
 	]}
@@ -612,6 +627,9 @@ Factor :
 		.sNot
 	    | pLiteral:
 		.sLiteral
+		@checkAt %newly changed 
+		| '#':
+		.sLength
 	    | 'file':
 		.sFile '(' @Expression ')'
 		.sExpnEnd
